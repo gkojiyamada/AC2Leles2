@@ -1,5 +1,7 @@
 package com.projects.praticandoAPI.modelo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +24,7 @@ public class Topico {
 	private Long id;
 	private String titulo;
 	private String mensagem;
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDateTime dataCriacao = LocalDateTime.now();
 	@Enumerated(EnumType.STRING)
 	private StatusTopico status = StatusTopico.NAO_RESPONDIDO;
