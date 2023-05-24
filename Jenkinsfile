@@ -1,5 +1,8 @@
 pipeline {
   agent any
+  environment {
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials')
+  }
   stages {
     stage("verify tooling") {
       steps {
@@ -27,6 +30,18 @@ pipeline {
         bat 'curl http://localhost:9090'
       }
     }
+     stage('Build and push image') {
+            steps {
+              timeout(time: 15, unit: "MINUTES") {
+                input message: "Quer aprovar o deploy?", ok: "Sim"  
+              }
+              echo "Iniciando deploy"
+                script {
+                    docker.withRegistry('https://index.docker.io/v1/', DOCKERHUB_CREDENTIALS) {
+                       
+                    }
+                }
+            }
   }
 
 }
