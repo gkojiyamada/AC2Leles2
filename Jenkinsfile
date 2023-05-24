@@ -1,7 +1,7 @@
 pipeline {
   agent any
   environment {
-        DOCKERHUB_CREDENTIALS = credentials("539888e1-0b27-423a-aa91-6d556be2650e")
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub')
   }
   stages {
     stage("verify tooling") {
@@ -33,9 +33,9 @@ pipeline {
      stage('Build and push image') {
             steps {
               timeout(time: 15, unit: "MINUTES") {
-                input message: "Quer aprovar o deploy?", ok: "Sim"  
+                input message: 'Quer aprovar o deploy?', ok: 'Sim'  
               }
-              echo "Iniciando deploy"
+              echo 'Iniciando deploy'
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', DOCKERHUB_CREDENTIALS) {
                        
