@@ -1,8 +1,10 @@
 pipeline {
   agent any
-  environment {
+    environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-  }
+        DOCKER_IMAGE_NAME = "lucao/praticando-api"
+      
+    }
   stages {
     stage("verify tooling") {
       steps {
@@ -30,24 +32,22 @@ pipeline {
         bat 'curl http://localhost:9090'
       }
     }
-     stage('Push image') {
-        withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
-        bat "docker push devopsglobalmedia/teamcitydocker:build"
-        }
+   
   
-        stage('Build and push image') {
-          withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
-            bat "docker push devopsglobalmedia/teamcitydocker:build"
+     stage('Build Docker image') {
+            steps {
+                script {
+                    docker.build("${DOCKER_IMAGE_NAME}")
+                }
             }
+       stage('Push Docker image to Docker Hub') {
             steps {
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', DOCKERHUB_CREDENTIALS) {
-                        def image = docker.build('praticandoapi')
-                        image.push()
+                        dockerImage.push()
                     }
                 }
             }
-        }
   }
 
 }
