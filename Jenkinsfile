@@ -2,7 +2,7 @@ pipeline {
   agent any
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-        DOCKER_IMAGE_NAME = "lucao/praticando-api"
+        DOCKER_IMAGE_NAME = "praticandoAPI"
       
     }
   stages {
