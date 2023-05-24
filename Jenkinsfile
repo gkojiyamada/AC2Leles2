@@ -42,7 +42,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', DOCKERHUB_CREDENTIALS) {
-                        def image = docker.build("my-image")
+                        def image = docker.build("lucao/praticando-api")
                         image.push()
                     }
                 }
