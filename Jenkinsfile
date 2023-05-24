@@ -2,8 +2,8 @@ pipeline {
   agent any
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-        DOCKER_IMAGE_NAME = "praticandoAPI"
-      
+        DOCKER_IMAGE_NAME = "openjdk"
+        DOCKER_IMAGE_TAG = "latest"
     }
   stages {
     stage("verify tooling") {
@@ -37,7 +37,7 @@ pipeline {
      stage('Build Docker image') {
             steps {
                 script {
-                    docker.build("${DOCKER_IMAGE_NAME}")
+                    docker.build("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}")
                 }
             }
        stage('Push Docker image to Docker Hub') {
