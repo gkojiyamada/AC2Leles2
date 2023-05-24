@@ -30,18 +30,21 @@ pipeline {
         bat 'curl http://localhost:9090'
       }
     }
-     stage('Build and push image') {
+     stage('Push image') {
+        withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
+        bat "docker push devopsglobalmedia/teamcitydocker:build"
+        }
+  
+        stage('Build and push image') {
             steps {
-              timeout(time: 15, unit: "MINUTES") {
-                input message: 'Quer aprovar o deploy?', ok: 'Sim'  
-              }
-              echo 'Iniciando deploy'
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', DOCKERHUB_CREDENTIALS) {
-                       
+                        def image = docker.build("my-image")
+                        image.push()
                     }
                 }
             }
+        }
   }
 
 }
