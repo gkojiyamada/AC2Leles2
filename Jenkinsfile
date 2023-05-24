@@ -36,6 +36,9 @@ pipeline {
         }
   
         stage('Build and push image') {
+          withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
+            bat "docker push devopsglobalmedia/teamcitydocker:build"
+            }
             steps {
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', DOCKERHUB_CREDENTIALS) {
