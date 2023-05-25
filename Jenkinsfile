@@ -13,7 +13,7 @@ pipeline {
       post {
         success {
           junit '**/target/surefire-reports/TEST-*.xml'
-          archiveArtifacts 'target'
+          archiveArtifacts '*.jar'
           step( [ $class: 'JacocoPublisher' ] )
         }
       }
