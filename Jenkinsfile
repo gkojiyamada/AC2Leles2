@@ -7,6 +7,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
+        echo "Iniciando deploy"
         git 'https://github.com/gkojiyamada/AC2Leles2.git'
         bat 'mvn clean package'
         bat 'docker system prune -a --volumes -f'
@@ -23,12 +24,7 @@ pipeline {
     }
     stage('Deploy') {
       steps {
-        timeout(time: 15, unit: "MINUTES") {
-            input message: 'Aprovar o deploy?', ok: 'Sim'
-        }
-
         echo "Iniciando deploy"
-        bat 'docker run -d integration/integration-prod'
       }
     }
   }
