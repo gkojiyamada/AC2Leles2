@@ -7,7 +7,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        git 'https://github.com/HGRon/ci-cd-integration.git'
+        git 'https://github.com/gkojiyamada/AC2Leles2.git'
         bat 'mvn clean package'
         bat 'docker system prune -a --volumes -f'
         bat 'docker build . --tag integration/integration-prod'
